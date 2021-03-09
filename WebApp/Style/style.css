@@ -1,0 +1,93 @@
+
+@import url('https://fonts.googleapis.com/css?family=Fascinate');
+body {
+    font-family: Roboto, sans-serif;
+}
+
+h1 {
+    font-size: 5em;
+
+}
+
+h2 {
+    font-size: 3em;
+
+}
+
+main {
+    text-align: center;
+}
+
+
+
+.btn-push {
+    position: relative;
+    top: 0px;
+    font-family: "Roboto";
+    text-decoration: none;
+    font-size: 25px;
+    background: #f7f7f7;
+    padding: 25px 25px;
+    margin: 0 10px;
+    border: 1px solid #c4c4c4;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 5px 0px #c4c4c4;
+    -moz-box-shadow: 0px 5px 0px #c4c4c4;
+    -ms-box-shadow: 0px 5px 0px #c4c4c4;
+    -o-box-shadow: 0px 5px 0px #c4c4c4;
+    box-shadow: 0px 5px 0px #c4c4c4;
+    color: #222;
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-transition: All 50ms ease;
+    -moz-transition: All 50ms ease;
+    -o-transition: All 50ms ease;
+    -ms-transition: All 50ms ease;
+    transition: All 50ms ease;
+  }
+  /*==========  Active State  ==========*/
+  .btn-push:active {
+    position: relative;
+    top: 5px;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-transition: All 50ms ease;
+    -moz-transition: All 50ms ease;
+    -o-transition: All 50ms ease;
+    -ms-transition: All 50ms ease;
+    transition: All 50ms ease;
+  }
+
+
+  .arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+  
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+ 

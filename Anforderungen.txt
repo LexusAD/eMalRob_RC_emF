@@ -1,0 +1,33 @@
+Anforderungen:
+
+Basis:
+
+WebApp Eingabe und websocket
+    Eingabe Tastatur
+        - Pfeiltasten
+        Optional:
+            - Beschleunigung und Geschwindigkeit
+
+    Websocket Verbindung mit eMalRob
+        - Connect Button
+        - Eingabe Feld für Ziel-IP-Adresse
+        - Diagnose: Verbindungsstatus, Integrität, Telemetrie 
+
+    Optionale Erweiterungen:
+        - On Screen Joystick
+        - Gamepad Eingabe
+        - Drive Mode
+
+
+eMalRob Fernsteuerung mit WebSocket
+    Kommunikation
+        - Verbindung zum Websocket aufbauen
+        - Daten einlesen
+        - Verbindungsstatus Prüfen
+        - Diagnosedaten senden: Receive PingPong,  Telemetrie
+    
+    Steuerung
+        - Steuervorgaben ausgeben: Geschwindigkeit, Richtung
+
+    Optionale Erweiterungen:
+        - Drive Mode ausgeben
