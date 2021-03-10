@@ -51,3 +51,5 @@ Thumbs.db
 *.code-workspace
 .history/*
 WebApp/.history/
+
+WebApp/e_mal_rob_rc/.history/src/
