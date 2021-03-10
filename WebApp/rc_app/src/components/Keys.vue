@@ -3,39 +3,23 @@
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet"
   />
-  <button
-    class="kbc-button"
-    v-bind:class="{ active: upArrow }"
-    @click="ButtonClick('Up')"
-  >
+  <button class="kbc-button" v-bind:class="{ active: upArrow }" @click="ButtonClick('Up')">
     <span class="material-icons">
       keyboard_arrow_up
     </span>
   </button>
   <br />
-  <button
-    class="kbc-button"
-    v-bind:class="{ active: leftArrow }"
-    @click="ButtonClick('Left')"
-  >
+  <button class="kbc-button" v-bind:class="{ active: leftArrow }" @click="ButtonClick('Left')">
     <span class="material-icons">
       keyboard_arrow_left
     </span>
   </button>
-  <button
-    class="kbc-button"
-    v-bind:class="{ active: downArrow }"
-    @click="ButtonClick('Down')"
-  >
+  <button class="kbc-button" v-bind:class="{ active: downArrow }" @click="ButtonClick('Down')">
     <span class="material-icons">
       keyboard_arrow_down
     </span>
   </button>
-  <button
-    class="kbc-button"
-    v-bind:class="{ active: rightArrow }"
-    @click="ButtonClick('Right')"
-  >
+  <button class="kbc-button" v-bind:class="{ active: rightArrow }" @click="ButtonClick('Right')">
     <span class="material-icons">
       keyboard_arrow_right
     </span>
