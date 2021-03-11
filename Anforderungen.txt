@@ -17,6 +17,10 @@ WebApp Eingabe und websocket
         - On Screen Joystick
         - Gamepad Eingabe
         - Drive Mode
+        - Website direkt von ESP deployen
+            - Kommunikation zwischen Website und ESP? Tzd websocket mit local host?
+            - Shared Memory
+            - Globales Objekt (Sowas bitte Atomic machen, danke)
 
 
 eMalRob Fernsteuerung mit WebSocket
