@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <WiFi.h>
+// #include <WiFi.h>
+#include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -11,13 +12,9 @@
 #define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-//Websocketdata
-#define IP_ADRESSE "demos.azing.com"
-#define PORT 80
-
 //Constants
-const char* ssid = "POCO X3 NFC";
-const char* password = "12345678";
+const char* ssid = "";
+const char* password = "";
 
 //Globals
 WebSocketsServer webSocket = WebSocketsServer(80);
@@ -34,22 +31,22 @@ void onWebSocketEvent_Server(uint8_t num,
 
     // Client has disconnected
     case WStype_DISCONNECTED:
-      Serial.printf("[%u] Disconnected!\n", num);
+      Serial.printf("Disconnected!", num);
       break;
 
     // New client has connected
     case WStype_CONNECTED:
       {
         IPAddress ip = webSocket.remoteIP(num);
-        Serial.printf("[%u] Connection from ", num);
+        Serial.printf("Connection from ", num);
         Serial.println(ip.toString());
       }
       break;
 
     // Echo text message back to client
     case WStype_TEXT:
-      Serial.printf("[%u] Text: %s\n", num, payload);
-      webSocket.sendTXT(num, payload);
+      Serial.printf("%s\n",payload);
+      webSocket.sendTXT(num,payload);
       break;
 
     // For everything else: do nothing
