@@ -16,10 +16,51 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 const char* ssid = "";
 const char* password = "";
 
+int directionBits[4]; // [0]: Left [1]: Up [2]: Right [3]: Down
+
+
 //Globals
 WebSocketsServer webSocket = WebSocketsServer(80);
 
 // Called when receiving any WebSocket message
+
+void setDirection(char *payload){
+      if (strcmp(payload,"L0") == 0)
+      {
+        directionBits[0] = 0;
+      }
+      else if (strcmp(payload,"L1") == 0)
+      {
+        directionBits[0] = 1;
+      }
+      else if (strcmp(payload,"U0") == 0)
+      {
+        directionBits[1] = 0;
+      }
+      else if (strcmp(payload,"U1") == 0)
+      {
+        directionBits[1] = 1;
+      }
+      else if (strcmp(payload,"R0") == 0)
+      {
+        directionBits[2] = 0;
+      }
+      else if (strcmp(payload,"R1") == 0)
+      {
+        directionBits[2] = 1;
+      }
+      else if (strcmp(payload,"D0") == 0)
+      {
+        directionBits[3] = 0;
+      }
+      else if (strcmp(payload,"D1") == 0)
+      {
+        directionBits[3] = 1;
+      }
+      Serial.printf("L:%d U:%d R:%d D:%d\n",directionBits[0],directionBits[1],directionBits[2],directionBits[3]);
+}
+
+
 
 void onWebSocketEvent_Server(uint8_t num,
                       WStype_t type,
@@ -28,7 +69,6 @@ void onWebSocketEvent_Server(uint8_t num,
 
   // Figure out the type of WebSocket event
   switch(type) {
-
     // Client has disconnected
     case WStype_DISCONNECTED:
       Serial.printf("Disconnected!", num);
@@ -45,7 +85,10 @@ void onWebSocketEvent_Server(uint8_t num,
 
     // Echo text message back to client
     case WStype_TEXT:
-      Serial.printf("%s\n",payload);
+      //Serial.printf("%s\n",payload);
+      setDirection((char*)payload);
+
+      // Serial.printf((char*)payload);
       webSocket.sendTXT(num,payload);
       break;
 
