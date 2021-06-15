@@ -166,7 +166,7 @@ export default {
     },
     connect() {
       console.log("Connecting ...")
-      this.ws_instance = new WebSocket(this.socket_url)
+      this.ws_instance = new WebSocket("ws://" + this.socket_url)
       this.ws_instance.onmessage = function(msg) {
         console.log(msg);
       }
