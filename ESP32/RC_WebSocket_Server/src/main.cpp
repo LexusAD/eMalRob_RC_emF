@@ -1,4 +1,3 @@
-// Include the AccelStepper Library
 #include <AccelStepper.h> //Version 1.61.0
 #include <math.h>
 #include <Arduino.h>
@@ -7,6 +6,10 @@
 #include <WebSocketsServer.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
+#define SET_BIT(x,n) ((x |= 1UL << n))
+#define CLEAR_BIT(x,n) (x &= ~(1UL << n))
+#define CHECK_BIT(x,n) ((x >> n) & 1U)
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
@@ -28,7 +31,7 @@ AccelStepper stepper2(FULLSTEP, 32, 25, 33, 26); //IN1, IN3, IN2, IN4
 const char *ssid = "";
 const char *password = "";
 
-int directionBits[4]; // [0]: Left [1]: Up [2]: Right [3]: Down
+uint8_t directionBits = 0;// first 4 bits LSB->MSB: [0]: Left [1]: Up [2]: Right [3]: Down 
 
 //Globals
 WebSocketsServer webSocket = WebSocketsServer(80);
@@ -39,37 +42,37 @@ void setDirection(char *payload)
 {
   if (strcmp(payload, "L0") == 0)
   {
-    directionBits[0] = 0;
+    CLEAR_BIT(directionBits,0)
   }
   else if (strcmp(payload, "L1") == 0)
   {
-    directionBits[0] = 1;
+    SET_BIT(directionBits,0)
   }
   else if (strcmp(payload, "U0") == 0)
   {
-    directionBits[1] = 0;
+    CLEAR_BIT(directionBits,1)
   }
   else if (strcmp(payload, "U1") == 0)
   {
-    directionBits[1] = 1;
+    SET_BIT(directionBits,1)
   }
   else if (strcmp(payload, "R0") == 0)
   {
-    directionBits[2] = 0;
+    CLEAR_BIT(directionBits,2)
   }
   else if (strcmp(payload, "R1") == 0)
   {
-    directionBits[2] = 1;
+    SET_BIT(directionBits,2)
   }
   else if (strcmp(payload, "D0") == 0)
   {
-    directionBits[3] = 0;
+    CLEAR_BIT(directionBits,3)
   }
   else if (strcmp(payload, "D1") == 0)
   {
-    directionBits[3] = 1;
+    SET_BIT(directionBits,3)
   }
-  Serial.printf("L:%d U:%d R:%d D:%d\n", directionBits[0], directionBits[1], directionBits[2], directionBits[3]);
+  Serial.printf("L:%d U:%d R:%d D:%d\n", CHECK_BIT(directionBits,0),CHECK_BIT(directionBits,1),CHECK_BIT(directionBits,2),CHECK_BIT(directionBits,3));
 }
 
 void onWebSocketEvent_Server(uint8_t num,
@@ -119,7 +122,7 @@ void onWebSocketEvent_Server(uint8_t num,
 void Motorsteuerung()
 {
 
-  if (directionBits[0] == 0 && directionBits[1] == 1 && directionBits[2] == 0 && directionBits[3] == 0) //Geardeaus
+  if (directionBits == 0x02) //Geardeaus //0010 -> 0x02
   {
     stepper1.setMaxSpeed(500.0);
     stepper2.setMaxSpeed(500.0);
@@ -131,7 +134,7 @@ void Motorsteuerung()
     stepper2.run();
   }
 
-  else if (directionBits[0] == 1 && directionBits[1] == 0 && directionBits[2] == 0 && directionBits[3] == 0) //Linkskurve
+  else if (directionBits == 0x01) //Linkskurve //0001 -> 0x01
   {
     stepper1.setMaxSpeed(500.0);
     stepper2.setMaxSpeed(500.0);
@@ -143,7 +146,7 @@ void Motorsteuerung()
     stepper2.run();
   }
 
-  else if (directionBits[0] == 0 && directionBits[1] == 0 && directionBits[2] == 1 && directionBits[3] == 0) //Rechtskurve
+  else if (directionBits == 0x04) //Rechtskurve //0100->0x04
   {
     stepper1.setMaxSpeed(500.0);
     stepper2.setMaxSpeed(500.0);
@@ -155,7 +158,7 @@ void Motorsteuerung()
     stepper2.run();
   }
 
-  else if (directionBits[0] == 0 && directionBits[1] == 0 && directionBits[2] == 0 && directionBits[3] == 1) //Rückwerts
+  else if (directionBits == 0x08) //Rückwerts //1000->0x08
   {
     stepper1.setMaxSpeed(500.0);
     stepper2.setMaxSpeed(500.0);
@@ -167,7 +170,7 @@ void Motorsteuerung()
     stepper2.run();
   }
 
-  else if (directionBits[0] == 1 && directionBits[1] == 1 && directionBits[2] == 0 && directionBits[3] == 0) //GrosseLinkskurve
+  else if (directionBits == 0x03) //GrosseLinkskurve //0011->0x03
   {
     stepper1.setMaxSpeed(500.0);
     stepper2.setMaxSpeed(250.0);
@@ -178,7 +181,7 @@ void Motorsteuerung()
     stepper1.run();
     stepper2.run();
   }
-  else if (directionBits[0] == 0 && directionBits[1] == 1 && directionBits[2] == 1 && directionBits[3] == 0) //GrosseRechtskurve
+  else if (directionBits == 0x06) //GrosseRechtskurve //0110-> 0x06
   {
     stepper1.setMaxSpeed(250.0);
     stepper2.setMaxSpeed(500.0);
